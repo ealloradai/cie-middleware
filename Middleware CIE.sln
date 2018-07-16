@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CIEPKI", "CSP\CSP.vcxproj", "{4ED5BF6B-CF39-4390-A6E4-0647D4C5B584}"
 EndProject
@@ -72,6 +72,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		Qt5Version = msvc2013
 		SolutionGuid = {0BC66C7B-F6AD-4580-8DD0-52125CCFF5B9}
 	EndGlobalSection
 EndGlobal

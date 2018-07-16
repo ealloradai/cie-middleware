@@ -45,3 +45,5 @@ x64/Release/
 /Setup/Debug/CIE-Middleware.exe
 /Setup/Release
 /Release
+*.sdf
+*.opensdf
