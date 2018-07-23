@@ -43,14 +43,14 @@ int TokenTransmitCallback(PCARD_DATA data, BYTE *apdu, DWORD apduSize, BYTE *res
 		if (code == 0xfffe) {
 			DWORD protocol=0;
 			ODS("UNPOWER CARD");
-			auto sw = SCardReconnect(data->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_UNPOWER_CARD, &protocol);
+            auto sw = SCardReconnect(data->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, SCARD_UNPOWER_CARD, &protocol);
 			if (sw == SCARD_S_SUCCESS)
 				SCardBeginTransaction(data->hScard);
 			return 0x9000;
 		}
 		else if (code == 0xffff) {
 			DWORD protocol = 0;
-			auto sw = SCardReconnect(data->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_RESET_CARD, &protocol);
+            auto sw = SCardReconnect(data->hScard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, SCARD_RESET_CARD, &protocol);
 			if (sw == SCARD_S_SUCCESS)
 				SCardBeginTransaction(data->hScard);
 			ODS("RESET CARD");

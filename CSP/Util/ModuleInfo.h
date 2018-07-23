@@ -1,6 +1,9 @@
 #pragma once
 #include "util.h"
 
+#if !defined (_MSC_VER) && !defined HANDLE
+#define HANDLE void*
+#endif
 
 class CModuleInfo
 {

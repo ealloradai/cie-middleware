@@ -1,7 +1,7 @@
 #if defined (_MSC_VER)
 #include "../StdAfx.h"
 #endif
-#include "cardlocker.h"
+#include "CardLocker.h"
 
 static const char *szCompiledFile=__FILE__;
 

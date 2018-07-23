@@ -2,8 +2,8 @@
 
 #include "Mechanism.h"
 #include "Slot.h"
-
 #include "../PCSC/Token.h"
+
 #if defined __linux__ || defined __APPLE__
 #include <PCSC/winscard.h>
 #include <PCSC/wintypes.h>
@@ -21,7 +21,7 @@
 #pragma pack(pop, cryptoki)
 #endif
 
-#include "P11Object.h".h"
+#include "P11Object.h"
 #include <memory>
 
 namespace p11 {

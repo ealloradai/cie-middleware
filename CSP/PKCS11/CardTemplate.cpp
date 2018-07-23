@@ -23,13 +23,10 @@ TemplateVector CCardTemplate::g_mCardTemplates;
 
 CCardTemplate::CCardTemplate(void)
 {
-    hLibrary=NULL;
 }
 
 CCardTemplate::~CCardTemplate(void)
 {
-    if (hLibrary)
-        FreeLibrary(hLibrary);
 }
 
 void CCardTemplate::AddTemplate(std::shared_ptr<CCardTemplate> pTemplate) {

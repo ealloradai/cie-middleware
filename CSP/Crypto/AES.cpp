@@ -3,6 +3,7 @@
 #endif
 
 #include "AES.h"
+#include "../Util/funccallinfo.h"
 
 static const char *szCompiledFile=__FILE__;
 

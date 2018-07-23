@@ -9,8 +9,7 @@
 #include <winscard.h>
 #endif
 
-#include "token.h"
-#include "../Util/SyncroMutex.h"
+#include "Token.h"
 
 class CCardLocker
 {

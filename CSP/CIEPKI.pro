@@ -56,7 +56,8 @@ win32: {
 }
 
 macx-clang: {
-    QMAKE_CXXFLAGS_WARN_OFF = -Wportable-include-path
+    SOURCES += ./Util/Portable.cpp
+    HEADERS += ./Util/Portable.h
 }
 
 HEADERS += \

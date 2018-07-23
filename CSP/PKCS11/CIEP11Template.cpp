@@ -1,12 +1,24 @@
 #if defined (_MSC_VER)
 #include "../StdAfx.h"
+#else
+
+#if !defined (_WIN32)
+#include "../Util/Portable.h"
 #endif
+
+#ifdef _DEBUG
+#define ODS(s) OutputDebugString(s)
+#else
+#define ODS(s)
+#endif
+#endif
+
 #include "CIEP11Template.h"
 #include "../CSP/IAS.h"
 #include "../PCSC/CardLocker.h"
-#include "../crypto/ASNParser.h"
+#include "../Crypto/ASNParser.h"
 #include <stdio.h>
-#include "../crypto/AES.h"
+#include "../Crypto/AES.h"
 #include "../PCSC/PCSC.h"
 
 int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, DWORD *respSize) {
@@ -15,7 +27,11 @@ int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, D
 		if (code == 0xfffd) {
 			int bufLen = *respSize;
 			*respSize = sizeof(data->hCard)+2;
+#if defined _WIN32
 			memcpy_s(resp, bufLen, &data->hCard, sizeof(data->hCard));
+#else
+            memcpy(resp, &data->hCard, sizeof(data->hCard));
+#endif
 			resp[sizeof(data->hCard)] = 0;
 			resp[sizeof(data->hCard) + 1] = 0;
 
@@ -24,7 +40,7 @@ int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, D
 		else if (code == 0xfffe) {
 			DWORD protocol = 0;
 			ODS("UNPOWER CARD");
-			auto ris = SCardReconnect(data->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_UNPOWER_CARD, &protocol);
+            auto ris = SCardReconnect(data->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, SCARD_UNPOWER_CARD, &protocol);
 			if (ris == SCARD_S_SUCCESS) {
 				SCardBeginTransaction(data->hCard);
 				*respSize = 2;
@@ -35,7 +51,7 @@ int TokenTransmitCallback(CSlot *data, BYTE *apdu, DWORD apduSize, BYTE *resp, D
 		}
 		else if (code == 0xffff) {
 			DWORD protocol = 0;
-			auto ris = SCardReconnect(data->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, SCARD_RESET_CARD, &protocol);
+            auto ris = SCardReconnect(data->hCard, SCARD_SHARE_SHARED, SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, SCARD_RESET_CARD, &protocol);
 			if (ris == SCARD_S_SUCCESS) {
 				SCardBeginTransaction(data->hCard);
 				*respSize = 2;
@@ -230,14 +246,15 @@ ByteDynArray  CIEtemplateGetSerial(CSlot &pSlot) {
 		ias.SelectAID_IAS();
 		ias.ReadPAN();
 		std::string numSerial;
-		dumpHexData(ias.PAN.mid(5, 6), numSerial, false);
+        ByteArray t=ias.PAN.mid(5, 6);
+        dumpHexData(t, numSerial, false);
 		return ByteArray((BYTE*)numSerial.c_str(),numSerial.length());
 	}
 }
 void CIEtemplateGetModel(CSlot &pSlot, std::string &szModel){ 
 	szModel = ""; 
 }
-void CIEtemplateGetTokenFlags(CSlot &pSlot, DWORD &dwFlags){
+void CIEtemplateGetTokenFlags(CSlot &pSlot, CK_ULONG &dwFlags){
 	dwFlags = CKF_LOGIN_REQUIRED | CKF_USER_PIN_INITIALIZED | CKF_TOKEN_INITIALIZED | CKF_REMOVABLE_DEVICE;
 }
 

@@ -82,7 +82,6 @@ public:
 
 	void InitLibrary(const char *szPath,void *templateData);
 
-	HMODULE hLibrary;
 	TemplateFuncList FunctionList;
 
 	std::string szName;
