@@ -1,7 +1,10 @@
-#include "..\stdafx.h"
-#include ".\aes.h"
+#if defined (_MSC_VER)
+#include "../stdafx.h"
+#endif
 
-static char *szCompiledFile=__FILE__;
+#include "AES.h"
+
+static const char *szCompiledFile=__FILE__;
 
 #ifdef WIN32
 

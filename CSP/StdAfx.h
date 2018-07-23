@@ -10,7 +10,7 @@
 #include "util/log.h"
 #include "util/funccallinfo.h"
 #include "util/util.h"
-#include "util/utilexception.h"
+#include "util/UtilException.h"
 
 #ifdef _DEBUG
 #define ODS(s) OutputDebugString(s)

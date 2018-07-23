@@ -1,13 +1,13 @@
 #include "../StdAfx.h"
 #include "apdu.h"
-#include "../util/tlv.h"
-#include "../util/util.h"
+#include "../Util/tlv.h"
+#include "../Util/util.h"
 #include "../crypto/des3.h"
 #include "../crypto/mac.h"
 #include "token.h"
 
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 APDU::APDU()  {
 }

@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <sstream>
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 DWORD ERR_ATTRIBUTE_IS_SENSITIVE = 0x40000008;
 DWORD ERR_OBJECT_HASNT_ATTRIBUTE = 0x40000009;
@@ -350,12 +350,13 @@ long ByteArrayToInt(ByteArray &ba)
 	exit_func
 }
 
-
+#if defined (_MSC_VER)
 std::string WinErr(HRESULT err) {
 	char szWinErrBuffer[300];
 	FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM, NULL, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), szWinErrBuffer, 300, NULL);
 	return std::string(szWinErrBuffer);
 }
+#endif
 
 char *  CardErr(DWORD dwSW) {
 	char *msg;

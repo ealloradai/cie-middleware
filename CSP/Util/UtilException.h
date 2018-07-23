@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include <string>
 
 //#define UTILEX_BASE			0
 //#define UTILEX_STRING		1
@@ -12,8 +13,8 @@
 
 class logged_error : public std::runtime_error {
 public:
-	logged_error(std::string &&message) : logged_error(message.c_str()) {}
-	logged_error(const char *message);
+    logged_error(std::string &&message) : logged_error(message.c_str()) {}
+    logged_error(const char *message);
 };
 
 class scard_error : public logged_error {

@@ -2,10 +2,10 @@
 
 #include "token.h"
 #include "apdu.h"
-#include "../util/tlv.h"
+#include "../Util/tlv.h"
 #include <vector>
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 CToken::CToken()
 {

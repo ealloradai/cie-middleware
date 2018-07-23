@@ -1,5 +1,9 @@
 #pragma once
+
+#if defined (_MSC_VER)
 #include "../stdafx.h"
+#endif
+
 #ifdef WIN32
 
 #include <bcrypt.h>
@@ -8,10 +12,10 @@
 #define AES_BLOCK_SIZE 16
 
 #else
-#include <openssl\aes.h>
+#include <openssl/aes.h>
 #endif
-#include "../util/util.h"
-#include "../util/utilexception.h"
+#include "../Util/util.h"
+#include "../Util/UtilException.h"
 
 #define AESKEY_LENGHT 32
 

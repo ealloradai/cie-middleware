@@ -2,10 +2,10 @@
 #ifdef WIN32
 #include <bcrypt.h>
 #else
-#include <openssl\des.h>
+#include <openssl/des.h>
 #endif
-#include "../util/util.h"
-#include "../util/utilexception.h"
+#include "../Util/util.h"
+#include "../Util/UtilException.h"
 
 class CMAC
 {

@@ -1,10 +1,10 @@
 #include "../StdAfx.h"
 #include "cardtemplate.h"
-#include "../util/util.h"
-#include "../util/moduleinfo.h"
+#include "../Util/util.h"
+#include "../Util/moduleinfo.h"
 #include "CIEP11Template.h"
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 const char szTemplatesQry[]="./TEMPLATES";
 const char szTemplateNode[]="TEMPLATE";

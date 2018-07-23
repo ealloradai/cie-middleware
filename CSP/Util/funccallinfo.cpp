@@ -2,7 +2,7 @@
 #include "funccallinfo.h"
 #include <stdio.h>
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 thread_local size_t tlsCallDepth = 0;
 thread_local std::unique_ptr<CFuncCallInfoList> callQueue = nullptr;

@@ -1,7 +1,7 @@
 #include "../stdafx.h"
 #include "IAS.h"
 #include "CSP.h"
-#include "../util/ModuleInfo.h"
+#include "../Util/ModuleInfo.h"
 #include "../UI/Message.h"
 #include "../UI/Pin.h"
 #include "../UI/Verifica.h"

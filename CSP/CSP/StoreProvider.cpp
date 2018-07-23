@@ -1,7 +1,7 @@
 #include "../stdafx.h"
 #include <Wincrypt.h>
 #include <stdio.h>
-#include "../util/moduleinfo.h"
+#include "../Util/moduleinfo.h"
 #include "csp.h"
 #include <vector>
 

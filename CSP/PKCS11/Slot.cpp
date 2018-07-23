@@ -4,8 +4,8 @@
 #include "../PCSC/token.h"
 
 #include "CardTemplate.h"
-#include "../util/util.h"
-#include "../util/syncroevent.h"
+#include "../Util/util.h"
+#include "../Util/syncroevent.h"
 #include <mutex>
 
 static char *szCompiledFile = __FILE__;

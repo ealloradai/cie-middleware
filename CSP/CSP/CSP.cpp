@@ -2,7 +2,7 @@
 #include <windows.h>
 #include "Cardmod.h"
 #include "../PCSC/Token.h"
-#include "../util/moduleinfo.h"
+#include "../Util/moduleinfo.h"
 #include "CSP.h"
 #include "IAS.h"
 #include <bcrypt.h>

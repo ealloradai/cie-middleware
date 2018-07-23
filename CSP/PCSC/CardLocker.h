@@ -1,7 +1,7 @@
 #pragma once
 #include <winscard.h>
 #include "token.h"
-#include "../util/syncromutex.h"
+#include "../Util/syncromutex.h"
 
 class CCardLocker
 {

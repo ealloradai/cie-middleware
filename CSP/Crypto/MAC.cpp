@@ -1,7 +1,10 @@
+#if defined (_MSC_VER)
 #include "../stdafx.h"
+#endif
+
 #include "mac.h"
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 #ifdef WIN32
 
@@ -94,7 +97,12 @@ void CMAC::Init(ByteArray &key)
 
 	ER_ASSERT(KeySize >= 8 && KeySize <= 24, "Errore nella lunghezza della chiave MAC (<8 o >24)")
 	des_cblock *keyVal1 = nullptr, *keyVal2 = nullptr, *keyVal3 = nullptr;
-	memcpy_s(initVec, sizeof(des_cblock), iv.data(), 8);
+
+#ifdef _WIN32
+    memcpy_s(initVec, sizeof(des_cblock), iv.data(), 8);
+#else
+    memcpy(initVec, iv.data(), 8);
+#endif
 
 	switch (KeySize) {
 	case 8:
@@ -121,6 +129,7 @@ void CMAC::Init(ByteArray &key)
 CMAC::~CMAC(void)
 {
 }
+
 DWORD CMAC::Mac(const ByteArray &data, ByteDynArray &resp)
 {
 	init_func

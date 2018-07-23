@@ -1,7 +1,7 @@
 #include "../StdAfx.h"
 #include "cardlocker.h"
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 CCardLocker::CCardLocker(SCARDHANDLE card)
 {

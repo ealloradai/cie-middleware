@@ -1,8 +1,8 @@
 #include "../stdafx.h"
 #include "moduleinfo.h"
-#include "utilexception.h"
+#include "UtilException.h"
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 CModuleInfo::CModuleInfo()
 {

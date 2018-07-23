@@ -12,7 +12,7 @@
 #include <thread>
 
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 std::vector<CLog> logInit;
 std::vector<CLog*> logToInit;
@@ -51,7 +51,7 @@ void initLog(const char *iniFile,const char *version) {
 	OutputDebugString(iniFile);
 	OutputDebugString("\n");
 
-	LogMode = (logMode)(IniSettingsInt("Log", "LogMode", (int)LM_Single, "Modalit√† di Log. Valori possibili:\n"
+	LogMode = (logMode)(IniSettingsInt("Log", "LogMode", (int)LM_Single, "Modalit√  di Log. Valori possibili:\n"
 		"0 ;LM_Single,	// un solo file\n"
 		"1 ;LM_Module,	// un file per modulo\n"
 		"2 ;LM_Thread,	// un file per thread\n"
@@ -65,7 +65,7 @@ void initLog(const char *iniFile,const char *version) {
 
 	FunctionLog = (IniSettingsBool("Log", "FunctionLog", false, "Abilitazione log delle chiamate a funzione")).GetValue((char*)iniFile);
 
-	GlobalDepth = (IniSettingsInt("Log", "FunctionDepth", 10, "Definisce la profondit√† massima di log delle funzioni\n")).GetValue((char*)iniFile);
+	GlobalDepth = (IniSettingsInt("Log", "FunctionDepth", 10, "Definisce la profondit√  massima di log delle funzioni\n")).GetValue((char*)iniFile);
 
 	GlobalParam = (IniSettingsBool("Log", "ParamLog", false, "Abilitazione log dei parametri di input delle funzioni")).GetValue((char*)iniFile);
 
@@ -183,7 +183,7 @@ void CLog::initModule(const char *name, const char *version) {
 	logVersion=version;
 
 	if (!InitLog)
-	// verr√† inizializzato dopo, quando chiamo logInit
+	// verr√  inizializzato dopo, quando chiamo logInit
 		logToInit.push_back(this);
 	else {
 		// vediamo se ce l'ho...

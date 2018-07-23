@@ -1,5 +1,5 @@
 #pragma once
-#include "../util/array.h"
+#include "../Util/array.h"
 
 #define SHA256_DIGEST_LENGTH 32
 

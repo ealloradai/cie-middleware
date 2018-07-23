@@ -1,7 +1,7 @@
 #include "../StdAfx.h"
 #include "tlv.h"
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 CTLV::CTLV(ByteArray &data)
 {

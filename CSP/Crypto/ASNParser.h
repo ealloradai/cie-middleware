@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include "../Util/util.h"
+#include "../Util/Array.h"
 
 size_t GetASN1DataLenght(ByteArray &data);
 

@@ -3,8 +3,8 @@
 #pragma pack(1)
 #include "pkcs11.h"
 #pragma pack()
-#include "../util/syncromutex.h"
-#include "../util/thread.h"
+#include "../Util/syncromutex.h"
+#include "../Util/thread.h"
 #pragma pack()
 #include "cardcontext.h"
 #include <map>

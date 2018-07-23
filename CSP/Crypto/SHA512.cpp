@@ -1,7 +1,10 @@
+#if defined (_MSC_VER)
 #include "..\stdafx.h"
-#include ".\sha512.h"
+#endif
 
-static char *szCompiledFile=__FILE__;
+#include "sha512.h"
+
+static const char *szCompiledFile=__FILE__;
 
 #ifdef WIN32
 

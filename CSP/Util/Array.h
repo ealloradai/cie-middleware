@@ -1,6 +1,6 @@
 #pragma once
 #include "defines.h"
-#include "utilexception.h"
+#include "UtilException.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -127,6 +127,7 @@ private:
 	}
 
 	size_t internalSet(ByteArray* ba) {
+        /* Avoid "unused parameter" warnings */ (void)ba;
 		return 0;
 	}
 

@@ -10,9 +10,11 @@
 #include "../crypto/MAC.h"
 #include <shlwapi.h>
 #include <shlobj.h>
-#include "../util/ModuleInfo.h"
+#include "../Util/ModuleInfo.h"
 #include "../res/resource.h"
+#ifdef WIN32
 #include "../../cacheLib/cacheLib.h"
+#endif
 #include <intsafe.h>
 
 #define CIE_KEY_DH_ID 0x81

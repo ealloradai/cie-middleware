@@ -1,5 +1,5 @@
 #include "PCSC.h"
-#include "../util/UtilException.h"
+#include "../Util/UtilException.h"
 #include <thread>
 
 struct transData {

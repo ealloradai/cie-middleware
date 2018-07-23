@@ -1,7 +1,7 @@
-#include "../util/util.h"
+#include "../Util/util.h"
 #include "cardcontext.h"
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 void CCardContext::getContext() {
 	init_func

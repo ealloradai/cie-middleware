@@ -2,7 +2,7 @@
 #include "p11object.h"
 #include "cardtemplate.h"
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 namespace p11 {
 

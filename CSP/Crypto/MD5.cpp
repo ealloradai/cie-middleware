@@ -1,7 +1,10 @@
+#if defined (_MSC_VER)
 #include "../stdafx.h"
+#endif
+
 #include "MD5.h"
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 #ifdef WIN32
 
@@ -59,7 +62,7 @@ CMD5::~CMD5() {
 
 void CMD5::Init() {
 	if (isInit)
-		throw logged_error("Un'operazione di hash è già in corso");
+        throw logged_error("Un' operazione di hash e' gia' in corso");
 	MD5_Init(&ctx);
 	isInit = true;
 }

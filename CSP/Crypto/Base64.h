@@ -1,6 +1,10 @@
 #pragma once
+#if defined (_MSC_VER)
 #include "../stdafx.h"
+#endif
 #include <string>
+#include "../Util/util.h"
+#include "../Util/Array.h"
 
 class  CBase64
 {

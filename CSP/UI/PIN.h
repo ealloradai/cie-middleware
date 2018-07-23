@@ -6,7 +6,7 @@
 #include "AtlBitmapSkinButton.h"
 #include "atlcontrols.h"
 #include <windows.h>       // simboli principali
-#include "../util/ModuleInfo.h"
+#include "../Util/ModuleInfo.h"
 #include "VCEdit.h"
 
 

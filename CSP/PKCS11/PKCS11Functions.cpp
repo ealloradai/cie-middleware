@@ -8,12 +8,12 @@
 #include "session.h"
 #include "cardtemplate.h"
 #include <malloc.h>
-#include "../util/ModuleInfo.h"
-#include "../util/util.h"
-#include "../util/syncroevent.h"
+#include "../Util/ModuleInfo.h"
+#include "../Util/util.h"
+#include "../Util/syncroevent.h"
 #include <mutex>
 
-static char *szCompiledFile=__FILE__;
+static const char *szCompiledFile=__FILE__;
 
 // flag: P11 inizializzato
 bool bP11Initialized=false;

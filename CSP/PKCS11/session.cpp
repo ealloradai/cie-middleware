@@ -1,9 +1,9 @@
 #include "../StdAfx.h"
 #include "session.h"
 #include "cardtemplate.h"
-#include "../util/util.h"
+#include "../Util/util.h"
 #include "../crypto\rsa.h"
-#include "../util/tlv.h"
+#include "../Util/tlv.h"
 
 static char *szCompiledFile = __FILE__;
 

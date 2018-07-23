@@ -1,4 +1,7 @@
-#include "..\stdafx.h"
+#if defined (_MSC_VER)
+#include "../stdafx.h"
+#endif
+
 #include "ASNParser.h"
 
 #define BitValue(a,b) ((a>>b) & 1)
@@ -73,10 +76,16 @@ void CASNTag::Reparse() {
 	//se è una bit string salto il numero di bit non usati
 	//attenzione in encode! non memorizzo il numero di bit non usati, quindi non posso
 	//ricostruirl'array originale! quindi lancio un'eccezione
-	if (tag.size()==1 && tag[0]==3)
-		parser.Parse(content.mid(1));
-	else
+    if (tag.size()==1 && tag[0]==3){
+        // INDIO 22072018
+        // Questa non va, content.mid(1) non e' un l-value e quindi errore in clang
+        // dovrebbe essere ok con una vbl temporanea
+        ByteArray t=content.mid(1);
+        parser.Parse(t);
+    }
+    else{
 		parser.Parse(content);
+    }
 	if (parser.tags.size() > 0) {
 		forcedSequence = true;
 		for (auto t=parser.tags.begin(); t!=parser.tags.end(); t++)
@@ -100,7 +109,12 @@ void CASNTag::Encode(ByteArray &data, size_t &len) {
 	data.copy(ByteArray(&tag[0], tlen));
 	size_t  clen = ContentLen();
 	size_t  llen = ASN1LLength(clen);
-	putASN1Length(clen, data.mid(tlen));
+
+    // INDIO 22072018
+    // Questa non va, data.mid(tlen) non e' un l-value e quindi errore in clang
+    // dovrebbe essere ok con una vbl temporanea
+    ByteArray t=data.mid(tlen);
+    putASN1Length(clen, t);
 
 	if (!isSequence()) {
 		data.mid(tlen + llen).copy(content);
@@ -110,7 +124,12 @@ void CASNTag::Encode(ByteArray &data, size_t &len) {
 		size_t  ptrPos = tlen+llen;
 		for (CASNTagArray::iterator i = tags.begin(); i != tags.end(); i++) {
 			size_t taglen;
-			(*i)->Encode(data.mid(ptrPos), taglen);
+
+            // INDIO 22072018
+            // Questa non va, data.mid(ptrPos) non e' un l-value e quindi errore in clang
+            // dovrebbe essere ok con una vbl temporanea
+            ByteArray t=data.mid(ptrPos);
+            (*i)->Encode(t, taglen);
 			ptrPos += taglen;
 		}
 		len = ptrPos;
@@ -156,7 +175,11 @@ void CASNParser::Encode(ByteArray &data, CASNTagArray &tags) {
 	size_t ptrPos = 0;
 	for (CASNTagArray::iterator i = tags.begin(); i != tags.end(); i++) {
 		size_t  len;
-		(*i)->Encode(data.mid(ptrPos), len);
+        // INDIO 22072018
+        // Questa non va, data.mid(ptrPos) non e' un l-value e quindi errore in clang
+        // dovrebbe essere ok con una vbl temporanea
+        ByteArray t=data.mid(ptrPos);
+        (*i)->Encode(t, len);
 		ptrPos += len;
 	}
 }
@@ -228,7 +251,12 @@ void CASNParser::Parse(ByteArray &data, CASNTagArray &tags, size_t  startseq)
 		tag->startPos = startseq + l;
 		tag->tag = tagv;
 		if (tag->isSequence()) {
-			Parse(ByteArray(&cur[llen + 1], len), tag->tags, startseq + l + llen + 1);
+
+            // INDIO 22072018
+            // Questa non va, ByteArray(&cur[llen + 1], len) non e' un l-value e quindi errore in clang
+            // dovrebbe essere ok con una vbl temporanea
+            ByteArray t=ByteArray(&cur[llen + 1], len);
+            Parse(t, tag->tags, startseq + l + llen + 1);
 		}
 		else {
 			// è un valore singolo

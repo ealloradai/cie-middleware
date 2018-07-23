@@ -6,7 +6,7 @@
 #include <openssl\rsa.h>
 #endif
 
-#include "../util/array.h"
+#include "../Util/array.h"
 
 class CRSA
 {

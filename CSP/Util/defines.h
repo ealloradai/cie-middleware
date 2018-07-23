@@ -52,8 +52,12 @@
 #define logParamBuf(p,l)
 #define logParamBufHide(p,l)
 
+#if defined (_MSC_VER)
 #define init_func \
   	CFuncCallInfo info(__FUNCTION__,Log);
+#else
+#define init_func
+#endif
 
 #define exit_func
 

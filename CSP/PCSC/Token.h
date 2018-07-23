@@ -2,7 +2,7 @@
 
 #include <winscard.h>
 #include "apdu.h"
-#include "../util/syncromutex.h"
+#include "../Util/syncromutex.h"
 
 extern SCARDCONTEXT hContext;
 	

@@ -7,7 +7,7 @@
 #include <windowsx.h> 
 //#include <aygshell.h> 
 #include "Bitmap.h" 
-#include "../util/ModuleInfo.h"
+#include "../Util/ModuleInfo.h"
 
 extern CModuleInfo moduleInfo;
 

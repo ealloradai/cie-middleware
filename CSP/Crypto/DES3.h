@@ -1,15 +1,18 @@
 #pragma once
+#if defined (_MSC_VER)
 #include "../stdafx.h"
+#endif
+
 #ifdef WIN32
 #include <bcrypt.h>
 
 #define DES_ENCRYPT 0
 #define DES_DECRYPT 1
 #else
-#include <openssl\des.h>
+#include <openssl/des.h>
 #endif
-#include "../util/util.h"
-#include "../util/utilexception.h"
+#include "../Util/util.h"
+#include "../Util/UtilException.h"
 
 #define DESKEY_LENGHT 8
 

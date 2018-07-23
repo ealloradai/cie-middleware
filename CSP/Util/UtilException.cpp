@@ -1,7 +1,9 @@
+#if defined (_MSC_VER)
 #include "../stdafx.h"
 #include <windows.h>
-#include "utilexception.h"
 #include <imagehlp.h>
+#endif
+#include "UtilException.h"
 #include <stdio.h>
 
 extern thread_local std::unique_ptr<CFuncCallInfoList> callQueue;
