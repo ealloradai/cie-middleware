@@ -1,6 +1,8 @@
+#if defined (_MSC_VER)
 #include "../StdAfx.h"
-#include ".\mechanism.h"
-#include "..\crypto\rsa.h"
+#endif
+#include "Mechanism.h"
+#include "../Crypto/RSA.h"
 #include "p11object.h"
 #include "../Util/util.h"
 

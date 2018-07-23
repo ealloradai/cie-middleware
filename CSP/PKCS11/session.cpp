@@ -1,8 +1,11 @@
-#include "../StdAfx.h"
+#if defined (_MSC_VER)
+#include "../stdafx.h"
+#endif
+
 #include "session.h"
 #include "cardtemplate.h"
 #include "../Util/util.h"
-#include "../crypto\rsa.h"
+#include "../Crypto/RSA.h"
 #include "../Util/tlv.h"
 
 static char *szCompiledFile = __FILE__;

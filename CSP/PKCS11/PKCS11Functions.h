@@ -1,10 +1,23 @@
 #pragma once
 
-#pragma pack(1)
-#include "pkcs11.h"
-#pragma pack()
+#if defined _WIN32 || defined _WIN64
+#pragma pack(push, cryptoki, 1)
+#endif
 
+#include "pkcs11.h"
+
+#if defined _WIN32 || defined _WIN64
+#pragma pack(pop, cryptoki)
+#endif
+
+#if defined __linux__ || defined __APPLE__
+#include <PCSC/winscard.h>
+#include <PCSC/wintypes.h>
+#endif
+
+#if defined _WIN32 || defined _WIN64
 #include <winscard.h>
+#endif
 
 #define MAXVAL 0xffffff
 #define MAXSESSIONS MAXVAL

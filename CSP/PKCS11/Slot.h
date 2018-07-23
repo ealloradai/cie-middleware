@@ -1,12 +1,16 @@
 #pragma once
 
-#pragma pack(1)
+#if defined _WIN32 || defined _WIN64
+#pragma pack(push, cryptoki, 1)
+#endif
+
 #include "pkcs11.h"
-#pragma pack()
-#include "../Util/syncromutex.h"
-#include "../Util/thread.h"
-#pragma pack()
-#include "cardcontext.h"
+
+#if defined _WIN32 || defined _WIN64
+#pragma pack(pop, cryptoki)
+#endif
+
+#include "CardContext.h"
 #include <map>
 #include <vector>
 #include <memory>

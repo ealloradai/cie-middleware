@@ -1,65 +1,68 @@
 #include "../Util/util.h"
-#include "cardcontext.h"
+#include "CardContext.h"
 
 static const char *szCompiledFile=__FILE__;
 
 void CCardContext::getContext() {
-	init_func
-	HANDLE hSCardSystemEvent=SCardAccessStartedEvent();
-	if (hSCardSystemEvent) {
-		WaitForSingleObject(hSCardSystemEvent,INFINITE);
-		SCardReleaseStartedEvent();
-	}
+    init_func
 
-	LONG _call_ris;
-	if ((_call_ris=(SCardEstablishContext(SCARD_SCOPE_SYSTEM,NULL,NULL,&hContext)))!=S_OK) {
-		throw windows_error(_call_ris);
-	}
+#if defined (_MSC_VER)
+    HANDLE hSCardSystemEvent=SCardAccessStartedEvent();
+    if (hSCardSystemEvent) {
+        WaitForSingleObject(hSCardSystemEvent,INFINITE);
+        SCardReleaseStartedEvent();
+    }
+#endif
+
+    LONG _call_ris;
+    if ((_call_ris=(SCardEstablishContext(SCARD_SCOPE_SYSTEM,NULL,NULL,&hContext)))!=SCARD_S_SUCCESS) {
+        throw windows_error(_call_ris);
+    }
 }
 
 CCardContext::CCardContext(void)
 {
-	hContext=NULL;
-	getContext();
+    hContext = 0;
+    getContext();
 }
 
 CCardContext::~CCardContext(void)
 {
-	if (hContext)
-		SCardReleaseContext(hContext);
+    if (hContext)
+        SCardReleaseContext(hContext);
 }
 
 CCardContext::operator SCARDCONTEXT() {
-	return hContext;
+    return hContext;
 }
 
 
 void CCardContext::validate() {
+#if defined (_MSC_VER)
+    HANDLE hSCardSystemEvent=SCardAccessStartedEvent();
+    if (hSCardSystemEvent) {
+        WaitForSingleObject(hSCardSystemEvent,INFINITE);
+        SCardReleaseStartedEvent();
+    }
+#endif
 
-	HANDLE hSCardSystemEvent=SCardAccessStartedEvent();
-	if (hSCardSystemEvent) {
-		WaitForSingleObject(hSCardSystemEvent,INFINITE);
-		SCardReleaseStartedEvent();
-	}
+    if (hContext)
+        if (SCardIsValidContext(hContext)!=SCARD_S_SUCCESS)
+            hContext=0;
 
-	if (hContext)
-		if (SCardIsValidContext(hContext)!=SCARD_S_SUCCESS) 
-			hContext=NULL;
-
-	if (hContext==NULL) {
-		getContext();
-	}
+    if (hContext==0) {
+        getContext();
+    }
 }
 
 void CCardContext::renew() {
-	init_func
-	
-	LONG ris;
-	if (hContext)
-		if ((ris=SCardReleaseContext(hContext)) != SCARD_S_SUCCESS)
-			throw windows_error(ris);
-	hContext=NULL;
+    init_func
 
-	getContext();
+    LONG ris;
+    if (hContext)
+        if ((ris=SCardReleaseContext(hContext)) != SCARD_S_SUCCESS)
+            throw windows_error(ris);
+    hContext=0;
 
+    getContext();
 }

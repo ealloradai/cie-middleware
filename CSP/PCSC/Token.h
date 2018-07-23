@@ -1,8 +1,16 @@
 #pragma once
 
+#if defined __linux__ || defined __APPLE__
+#include <PCSC/winscard.h>
+#include <PCSC/wintypes.h>
+#endif
+
+#if defined _WIN32 || defined _WIN64
 #include <winscard.h>
-#include "apdu.h"
-#include "../Util/syncromutex.h"
+#endif
+
+#include "../Util/Array.h"
+#include "APDU.h"
 
 extern SCARDCONTEXT hContext;
 	
@@ -16,7 +24,10 @@ class CCardLocker;
 class CToken
 {
 public:
-	typedef HRESULT(*TokenTransmitCallback)(void *data, uint8_t *apdu, DWORD apduSize, uint8_t *resp, DWORD *respSize);
+    // INDIO 22072018
+    // dovrebbe essere ok sostituire HRESULT con un int
+    // typedef HRESULT(*TokenTransmitCallback)(void *data, uint8_t *apdu, DWORD apduSize, uint8_t *resp, DWORD *respSize);
+    typedef int(*TokenTransmitCallback)(void *data, uint8_t *apdu, DWORD apduSize, uint8_t *resp, DWORD *respSize);
 
 private:
 	TokenTransmitCallback transmitCallback;

@@ -1,7 +1,10 @@
-#include "../StdAfx.h"
-#include "cardtemplate.h"
+#if defined (_MSC_VER)
+#include "../stdafx.h"
+#endif
+
+#include "CardTemplate.h"
 #include "../Util/util.h"
-#include "../Util/moduleinfo.h"
+#include "../Util/ModuleInfo.h"
 #include "CIEP11Template.h"
 
 static const char *szCompiledFile=__FILE__;
@@ -20,13 +23,13 @@ TemplateVector CCardTemplate::g_mCardTemplates;
 
 CCardTemplate::CCardTemplate(void)
 {
-	hLibrary=NULL;
+    hLibrary=NULL;
 }
 
 CCardTemplate::~CCardTemplate(void)
 {
-	if (hLibrary)
-		FreeLibrary(hLibrary);
+    if (hLibrary)
+        FreeLibrary(hLibrary);
 }
 
 void CCardTemplate::AddTemplate(std::shared_ptr<CCardTemplate> pTemplate) {

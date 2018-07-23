@@ -1,11 +1,13 @@
-#include "../StdAfx.h"
+#if defined (_MSC_VER)
+#include "../stdafx.h"
+#endif
 #include "slot.h"
 #include "PKCS11Functions.h"
 #include "../PCSC/token.h"
 
 #include "CardTemplate.h"
 #include "../Util/util.h"
-#include "../Util/syncroevent.h"
+#include "../Util/SyncroEvent.h"
 #include <mutex>
 
 static char *szCompiledFile = __FILE__;

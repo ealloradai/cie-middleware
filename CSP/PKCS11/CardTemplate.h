@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../PCSC/token.h"
+#include "../PCSC/Token.h"
 #include "session.h"
 #include <memory>
 

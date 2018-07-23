@@ -2,7 +2,7 @@
 #include "../stdafx.h"
 #endif
 
-#include "mac.h"
+#include "MAC.h"
 
 static const char *szCompiledFile=__FILE__;
 
@@ -88,7 +88,7 @@ ByteDynArray CMAC::Mac(const ByteArray &data)
 }
 #else
 
-void CMAC::Init(ByteArray &key)
+void CMAC::Init(const ByteArray &key, const ByteArray &iv)
 {
 	init_func
 	size_t KeySize = key.size();
@@ -130,12 +130,12 @@ CMAC::~CMAC(void)
 {
 }
 
-DWORD CMAC::Mac(const ByteArray &data, ByteDynArray &resp)
+ByteDynArray CMAC::Mac(const ByteArray &data)
 {
 	init_func
 
 	des_cblock iv;
-	memcpy_s(iv, sizeof(des_cblock), initVec, sizeof(initVec));
+    memcpy(iv, initVec, sizeof(initVec));
 
 	size_t ANSILen = ANSIPadLen(data.size());
 	if (data.size()>8) {
@@ -144,11 +144,12 @@ DWORD CMAC::Mac(const ByteArray &data, ByteDynArray &resp)
 	}
 	uint8_t dest[8];
 	des_ede3_cbc_encrypt(data.mid(ANSILen - 8).data(), dest, (long)(data.size() - ANSILen) + 8, k1, k2, k3, &iv, DES_ENCRYPT);
-	resp = ByteArray(dest, 8);
+    ByteArray resp = ByteArray(dest, 8);
 
-	_return(OK)
-	exit_func
-	_return(FAIL)
+    exit_func
+
+    return resp;
+
 }
 
 CMAC::CMAC() {

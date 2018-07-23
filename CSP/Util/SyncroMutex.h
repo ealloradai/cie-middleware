@@ -1,6 +1,7 @@
 #pragma once
+
 #include "util.h"
-#include "utilexception.h"
+#include "UtilException.h"
 
 class CSyncroMutex
 {

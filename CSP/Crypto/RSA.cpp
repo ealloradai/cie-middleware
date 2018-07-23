@@ -1,5 +1,8 @@
-#include "..\stdafx.h"
-#include ".\rsa.h"
+#if defined (_MSC_VER)
+#include "../stdafx.h"
+#endif
+
+#include "RSA.h"
 
 static const char *szCompiledFile=__FILE__;
 
@@ -64,11 +67,16 @@ ByteDynArray CRSA::RSA_PURE(ByteArray &data)
 
 #else
 
-DWORD CRSA::GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, ByteDynArray &privexp) 
+void CRSA::GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, ByteDynArray &privexp)
 {
 	init_func
-	keyPriv = RSA_new();
+
+    keyPriv = RSA_new();
+#if defined (_MSC_VER)
 	auto BNpubexp = BN_secure_new();
+#else
+    auto BNpubexp = BN_new();
+#endif
 	BN_set_word(BNpubexp, 65537);
 	RSA_generate_key_ex(keyPriv, size, BNpubexp, nullptr);
 	module.resize(BN_num_bytes(keyPriv->n));
@@ -78,16 +86,18 @@ DWORD CRSA::GenerateKey(DWORD size, ByteDynArray &module, ByteDynArray &pubexp, 
 	pubexp.resize(BN_num_bytes(keyPriv->e));
 	BN_bn2bin(keyPriv->e, pubexp.data());
 
-	_return(OK)
 	exit_func
-	_return(FAIL)
 }
 CRSA::CRSA(ByteArray &mod,ByteArray &exp)
 {
 	KeySize = mod.size();
 	keyPriv = RSA_new();
 	keyPriv->n = BN_bin2bn(mod.data(), (int)mod.size(), keyPriv->n);
-	keyPriv->d = BN_secure_new(); 
+#if defined (_MSC_VER)
+    keyPriv->d = BN_secure_new();
+#else
+    keyPriv->d = BN_new();
+#endif
 	keyPriv->e = BN_bin2bn(exp.data(), (int)exp.size(), keyPriv->e);
 }
 

@@ -36,7 +36,14 @@ win32: {
         ./CSP/IAS.cpp \
         ./CSP/NotImpl.cpp \
         ./CSP/sbloccoPIN.cpp \
-        ./CSP/StoreProvider.cpp
+        ./CSP/StoreProvider.cpp \
+        \
+        ./UI/Message.cpp \
+        ./UI/Bitmap.cpp \
+        ./UI/PIN.cpp \
+        ./UI/safeDesktop.cpp \
+        ./UI/SystemTray.cpp \
+        ./UI/Verifica.cpp
 
     LIBS += \
         -lWinhttp \
@@ -79,6 +86,7 @@ HEADERS += \
     ./Util/log.h \
     ./Util/ModuleInfo.h \
     ./Util/SyncroEvent.h \
+#    ./Util/SyncroMutex.h \
     ./Util/tinyxml2.h \
     ./Util/TLV.h \
     ./Util/util.h \
@@ -123,16 +131,11 @@ SOURCES += \
     ./Util/log.cpp \
     ./Util/ModuleInfo.cpp \
     ./Util/SyncroEvent.cpp \
+#    ./Util/SyncroMutex.cpp \
     ./Util/tinyxml2.cpp \
     ./Util/TLV.cpp \
     ./Util/util.cpp \
     ./Util/UtilException.cpp \
-    ./UI/Message.cpp \
-    ./UI/Bitmap.cpp \
-    ./UI/PIN.cpp \
-    ./UI/safeDesktop.cpp \
-    ./UI/SystemTray.cpp \
-    ./UI/Verifica.cpp \
     ./PCSC/APDU.cpp \
     ./PCSC/CardLocker.cpp \
     ./PCSC/PCSC.cpp \

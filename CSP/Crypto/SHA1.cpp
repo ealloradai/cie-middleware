@@ -1,4 +1,7 @@
+#if defined (_MSC_VER)
 #include "../stdafx.h"
+#endif
+
 #include "SHA1.h"
 
 static const char *szCompiledFile=__FILE__;
@@ -63,11 +66,13 @@ void CSHA1::Init() {
 	SHA1_Init(&ctx);
 	isInit = true;
 }
+
 void CSHA1::Update(ByteArray data) {
 	if (!isInit)
 		throw logged_error("Hash non inizializzato");
 	SHA1_Update(&ctx, data.data(), data.size());
 }
+
 ByteDynArray CSHA1::Final() {
 	if (!isInit)
 		throw logged_error("Hash non inizializzato");

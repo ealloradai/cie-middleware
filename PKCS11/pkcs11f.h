@@ -1,4 +1,4 @@
-/* pkcs11f.h include file for PKCS #11.  2001 June 25 */
+/* pkcs11f.h include file for PKCS #11.  1997 December 22 */
 
 /* This function contains pretty much everything about all the */
 /* Cryptoki function prototypes.  Because this information is */
@@ -113,12 +113,11 @@ CK_PKCS11_FUNCTION_INFO(C_GetMechanismInfo)
 /* C_InitToken initializes a token. */
 CK_PKCS11_FUNCTION_INFO(C_InitToken)
 #ifdef CK_NEED_ARG_LIST
-/* pLabel changed from CK_CHAR_PTR to CK_UTF8CHAR_PTR for v2.10 */
 (
-  CK_SLOT_ID      slotID,    /* ID of the token's slot */
-  CK_UTF8CHAR_PTR pPin,      /* the SO's initial PIN */
-  CK_ULONG        ulPinLen,  /* length in bytes of the PIN */
-  CK_UTF8CHAR_PTR pLabel     /* 32-byte token label (blank padded) */
+  CK_SLOT_ID     slotID,    /* ID of the token's slot */
+  CK_CHAR_PTR    pPin,      /* the SO's initial PIN */
+  CK_ULONG       ulPinLen,  /* length in bytes of the PIN */
+  CK_CHAR_PTR    pLabel     /* 32-byte token label (blank padded) */
 );
 #endif
 
@@ -128,7 +127,7 @@ CK_PKCS11_FUNCTION_INFO(C_InitPIN)
 #ifdef CK_NEED_ARG_LIST
 (
   CK_SESSION_HANDLE hSession,  /* the session's handle */
-  CK_UTF8CHAR_PTR   pPin,      /* the normal user's PIN */
+  CK_CHAR_PTR       pPin,      /* the normal user's PIN */
   CK_ULONG          ulPinLen   /* length in bytes of the PIN */
 );
 #endif
@@ -139,9 +138,9 @@ CK_PKCS11_FUNCTION_INFO(C_SetPIN)
 #ifdef CK_NEED_ARG_LIST
 (
   CK_SESSION_HANDLE hSession,  /* the session's handle */
-  CK_UTF8CHAR_PTR   pOldPin,   /* the old PIN */
+  CK_CHAR_PTR       pOldPin,   /* the old PIN */
   CK_ULONG          ulOldLen,  /* length of the old PIN */
-  CK_UTF8CHAR_PTR   pNewPin,   /* the new PIN */
+  CK_CHAR_PTR       pNewPin,   /* the new PIN */
   CK_ULONG          ulNewLen   /* length of the new PIN */
 );
 #endif
@@ -225,7 +224,7 @@ CK_PKCS11_FUNCTION_INFO(C_Login)
 (
   CK_SESSION_HANDLE hSession,  /* the session's handle */
   CK_USER_TYPE      userType,  /* the user type */
-  CK_UTF8CHAR_PTR   pPin,      /* the user's PIN */
+  CK_CHAR_PTR       pPin,      /* the user's PIN */
   CK_ULONG          ulPinLen   /* the length of the PIN */
 );
 #endif

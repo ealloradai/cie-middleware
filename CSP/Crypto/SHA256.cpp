@@ -1,5 +1,8 @@
-#include "..\stdafx.h"
-#include ".\sha256.h"
+#if defined (_MSC_VER)
+#include "../StdAfx.h"
+#endif
+
+#include "SHA256.h"
 
 static const char *szCompiledFile=__FILE__;
 

@@ -3,10 +3,12 @@
 #ifdef WIN32
 #include <bcrypt.h>
 #else
-#include <openssl\rsa.h>
+#include <openssl/bn.h>
+#include <openssl/rsa.h>
 #endif
 
-#include "../Util/array.h"
+#include "../Util/util.h"
+#include "../Util/Array.h"
 
 class CRSA
 {

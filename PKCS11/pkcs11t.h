@@ -1,4 +1,4 @@
-/* pkcs11t.h include file for PKCS #11.  2001 June 25 */
+/* pkcs11t.h include file for PKCS #11.  1997 December 22 */
 
 /* See top of pkcs11.h for information about the macros that
  * must be defined and the structure-packing conventions that
@@ -16,20 +16,14 @@
 #endif
 
 
-/* an unsigned 8-bit value */
-typedef unsigned char     CK_BYTE;
 
 /* an unsigned 8-bit character */
 typedef CK_BYTE           CK_CHAR;
 
-/* an 8-bit UTF-8 character */
-typedef CK_BYTE           CK_UTF8CHAR;
-
 /* a BYTE-sized Boolean flag */
 typedef CK_BYTE           CK_BBOOL;
 
-/* an unsigned value, at least 32 bits long */
-typedef unsigned long int CK_ULONG;
+
 
 /* a signed value, the same size as a CK_ULONG */
 /* CK_LONG is new for v2.0 */
@@ -44,9 +38,7 @@ typedef CK_ULONG          CK_FLAGS;
 #define CK_EFFECTIVELY_INFINITE    0
 
 
-typedef CK_BYTE     CK_PTR   CK_BYTE_PTR;
 typedef CK_CHAR     CK_PTR   CK_CHAR_PTR;
-typedef CK_UTF8CHAR CK_PTR   CK_UTF8CHAR_PTR;
 typedef CK_ULONG    CK_PTR   CK_ULONG_PTR;
 typedef void        CK_PTR   CK_VOID_PTR;
 
@@ -68,14 +60,12 @@ typedef CK_VERSION CK_PTR CK_VERSION_PTR;
 
 
 typedef struct CK_INFO {
-  /* manufacturerID and libraryDecription have been changed from
-   * CK_CHAR to CK_UTF8CHAR for v2.10 */
   CK_VERSION    cryptokiVersion;     /* Cryptoki interface ver */
-  CK_UTF8CHAR   manufacturerID[32];  /* blank padded */
+  CK_CHAR       manufacturerID[32];  /* blank padded */
   CK_FLAGS      flags;               /* must be zero */
 
   /* libraryDescription and libraryVersion are new for v2.0 */
-  CK_UTF8CHAR   libraryDescription[32];  /* blank padded */
+  CK_CHAR       libraryDescription[32];  /* blank padded */
   CK_VERSION    libraryVersion;          /* version of library */
 } CK_INFO;
 
@@ -97,10 +87,8 @@ typedef CK_SLOT_ID CK_PTR CK_SLOT_ID_PTR;
 
 /* CK_SLOT_INFO provides information about a slot */
 typedef struct CK_SLOT_INFO {
-  /* slotDescription and manufacturerID have been changed from
-   * CK_CHAR to CK_UTF8CHAR for v2.10 */
-  CK_UTF8CHAR   slotDescription[64];  /* blank padded */
-  CK_UTF8CHAR   manufacturerID[32];   /* blank padded */
+  CK_CHAR       slotDescription[64];  /* blank padded */
+  CK_CHAR       manufacturerID[32];   /* blank padded */
   CK_FLAGS      flags;
 
   /* hardwareVersion and firmwareVersion are new for v2.0 */
@@ -120,11 +108,9 @@ typedef CK_SLOT_INFO CK_PTR CK_SLOT_INFO_PTR;
 
 /* CK_TOKEN_INFO provides information about a token */
 typedef struct CK_TOKEN_INFO {
-  /* label, manufacturerID, and model have been changed from
-   * CK_CHAR to CK_UTF8CHAR for v2.10 */
-  CK_UTF8CHAR   label[32];           /* blank padded */
-  CK_UTF8CHAR   manufacturerID[32];  /* blank padded */
-  CK_UTF8CHAR   model[16];           /* blank padded */
+  CK_CHAR       label[32];           /* blank padded */
+  CK_CHAR       manufacturerID[32];  /* blank padded */
+  CK_CHAR       model[16];           /* blank padded */
   CK_CHAR       serialNumber[16];    /* blank padded */
   CK_FLAGS      flags;               /* see below */
 
@@ -153,14 +139,14 @@ typedef struct CK_TOKEN_INFO {
  *      Bit Flag                    Mask        Meaning 
  */
 #define CKF_RNG                     0x00000001  /* has random #
-												 * generator */
+                                                 * generator */
 #define CKF_WRITE_PROTECTED         0x00000002  /* token is
-												 * write-
-												 * protected */
+                                                 * write-
+                                                 * protected */
 #define CKF_LOGIN_REQUIRED          0x00000004  /* user must
-												 * login */
+                                                 * login */
 #define CKF_USER_PIN_INITIALIZED    0x00000008  /* normal user's
-												 * PIN is set */
+                                                 * PIN is set */
 
 /* CKF_RESTORE_KEY_NOT_NEEDED is new for v2.0.  If it is set,
  * that means that *every* time the state of cryptographic
@@ -184,58 +170,6 @@ typedef struct CK_TOKEN_INFO {
  * encrypt; decrypt and digest; sign and encrypt; and decrypt
  * and sign) */
 #define CKF_DUAL_CRYPTO_OPERATIONS  0x00000200
-
-/* CKF_TOKEN_INITIALIZED if new for v2.10. If it is true, the
- * token has been initialized using C_InitializeToken or an 
- * equivalent mechanism outside the scope of PKCS #11.
- * Calling C_InitializeToken when this flag is set will cause 
- * the token to be reinitialized. */
-#define CKF_TOKEN_INITIALIZED       0x00000400
-
-/* CKF_SECONDARY_AUTHENTICATION if new for v2.10. If it is 
- * true, the token supports secondary authentication for 
- * private key objects. */
-#define CKF_SECONDARY_AUTHENTICATION  0x00000800
-
-/* CKF_USER_PIN_COUNT_LOW if new for v2.10. If it is true, an 
- * incorrect user login PIN has been entered at least once 
- * since the last successful authentication. */
-#define CKF_USER_PIN_COUNT_LOW       0x00010000
-
-/* CKF_USER_PIN_FINAL_TRY if new for v2.10. If it is true,
- * supplying an incorrect user PIN will it to become locked. */
-#define CKF_USER_PIN_FINAL_TRY       0x00020000
-
-/* CKF_USER_PIN_LOCKED if new for v2.10. If it is true, the 
- * user PIN has been locked. User login to the token is not 
- * possible. */
-#define CKF_USER_PIN_LOCKED          0x00040000
-
-/* CKF_USER_PIN_TO_BE_CHANGED if new for v2.10. If it is true, 
- * the user PIN value is the default value set by token 
- * initialization or manufacturing, or the PIN has been
- * expired by the card. */
-#define CKF_USER_PIN_TO_BE_CHANGED   0x00080000
-
-/* CKF_SO_PIN_COUNT_LOW if new for v2.10. If it is true, an 
- * incorrect SO login PIN has been entered at least once since 
- * the last successful authentication. */
-#define CKF_SO_PIN_COUNT_LOW         0x00100000
-
-/* CKF_SO_PIN_FINAL_TRY if new for v2.10. If it is true,
- * supplying an incorrect SO PIN will it to become locked. */
-#define CKF_SO_PIN_FINAL_TRY         0x00200000
-
-/* CKF_SO_PIN_LOCKED if new for v2.10. If it is true, the SO 
- * PIN has been locked. SO login to the token is not possible.
- */
-#define CKF_SO_PIN_LOCKED            0x00400000
-
-/* CKF_SO_PIN_TO_BE_CHANGED if new for v2.10. If it is true, 
- * the SO PIN value is the default value set by token 
- * initialization or manufacturing, or the PIN has been
- * expired by the card. */
-#define CKF_SO_PIN_TO_BE_CHANGED     0x00800000
 
 typedef CK_TOKEN_INFO CK_PTR CK_TOKEN_INFO_PTR;
 
@@ -303,28 +237,15 @@ typedef CK_OBJECT_HANDLE CK_PTR CK_OBJECT_HANDLE_PTR;
 typedef CK_ULONG          CK_OBJECT_CLASS;
 
 /* The following classes of objects are defined: */
-/* CKO_HW_FEATURE is new for v2.10 */
-/* CKO_DOMAIN_PARAMETERS is new for v2.11 */
-#define CKO_DATA              0x00000000
-#define CKO_CERTIFICATE       0x00000001
-#define CKO_PUBLIC_KEY        0x00000002
-#define CKO_PRIVATE_KEY       0x00000003
-#define CKO_SECRET_KEY        0x00000004
-#define CKO_HW_FEATURE        0x00000005
-#define CKO_DOMAIN_PARAMETERS 0x00000006
-#define CKO_VENDOR_DEFINED    0x80000000
+#define CKO_DATA            0x00000000
+#define CKO_CERTIFICATE     0x00000001
+#define CKO_PUBLIC_KEY      0x00000002
+#define CKO_PRIVATE_KEY     0x00000003
+#define CKO_SECRET_KEY      0x00000004
+#define CKO_VENDOR_DEFINED  0x80000000
 
 typedef CK_OBJECT_CLASS CK_PTR CK_OBJECT_CLASS_PTR;
 
-/* CK_HW_FEATURE_TYPE is new for v2.10. CK_HW_FEATURE_TYPE is a
- * value that identifies the hardware feature type of an object
- * with CK_OBJECT_CLASS equal to CKO_HW_FEATURE. */
-typedef CK_ULONG          CK_HW_FEATURE_TYPE;
- 
-/* The following hardware feature types are defined */
-#define CKH_MONOTONIC_COUNTER  0x00000001
-#define CKH_CLOCK           0x00000002
-#define CKH_VENDOR_DEFINED  0x80000000
 
 /* CK_KEY_TYPE is a value that identifies a key type */
 /* CK_KEY_TYPE was changed from CK_USHORT to CK_ULONG for v2.0 */
@@ -336,10 +257,7 @@ typedef CK_ULONG          CK_KEY_TYPE;
 #define CKK_DH              0x00000002
 
 /* CKK_ECDSA and CKK_KEA are new for v2.0 */
-/* CKK_ECDSA is deprecated in v2.11, CKK_EC is preferred. */
 #define CKK_ECDSA           0x00000003
-#define CKK_EC              0x00000003
-#define CKK_X9_42_DH        0x00000004
 #define CKK_KEA             0x00000005
 
 #define CKK_GENERIC_SECRET  0x00000010
@@ -352,16 +270,14 @@ typedef CK_ULONG          CK_KEY_TYPE;
 /* all these key types are new for v2.0 */
 #define CKK_CAST            0x00000016
 #define CKK_CAST3           0x00000017
-/* CKK_CAST5 is deprecated in v2.11, CKK_CAST128 is preferred. */
 #define CKK_CAST5           0x00000018
-#define CKK_CAST128         0x00000018
+#define CKK_CAST128         0x00000018  /* CAST128=CAST5 */
 #define CKK_RC5             0x00000019
 #define CKK_IDEA            0x0000001A
 #define CKK_SKIPJACK        0x0000001B
 #define CKK_BATON           0x0000001C
 #define CKK_JUNIPER         0x0000001D
 #define CKK_CDMF            0x0000001E
-#define CKK_AES             0x0000001F
 
 #define CKK_VENDOR_DEFINED  0x80000000
 
@@ -373,9 +289,7 @@ typedef CK_ULONG          CK_KEY_TYPE;
 typedef CK_ULONG          CK_CERTIFICATE_TYPE;
 
 /* The following certificate types are defined: */
-/* CKC_X_509_ATTR_CERT is new for v2.10 */
 #define CKC_X_509           0x00000000
-#define CKC_X_509_ATTR_CERT 0x00000001
 #define CKC_VENDOR_DEFINED  0x80000000
 
 
@@ -392,23 +306,9 @@ typedef CK_ULONG          CK_ATTRIBUTE_TYPE;
 #define CKA_LABEL              0x00000003
 #define CKA_APPLICATION        0x00000010
 #define CKA_VALUE              0x00000011
-
-/* CKA_OBJECT_ID is new for v2.10 */
-#define CKA_OBJECT_ID          0x00000012
-
 #define CKA_CERTIFICATE_TYPE   0x00000080
 #define CKA_ISSUER             0x00000081
 #define CKA_SERIAL_NUMBER      0x00000082
-
-/* CKA_AC_ISSUER, CKA_OWNER, and CKA_ATTR_TYPES are new 
- * for v2.10 */
-#define CKA_AC_ISSUER          0x00000083
-#define CKA_OWNER              0x00000084
-#define CKA_ATTR_TYPES         0x00000085
-
-/* CKA_TRUSTED is new for v2.11 */
-#define CKA_TRUSTED            0x00000086
-
 #define CKA_KEY_TYPE           0x00000100
 #define CKA_SUBJECT            0x00000101
 #define CKA_ID                 0x00000102
@@ -436,11 +336,6 @@ typedef CK_ULONG          CK_ATTRIBUTE_TYPE;
 #define CKA_PRIME              0x00000130
 #define CKA_SUBPRIME           0x00000131
 #define CKA_BASE               0x00000132
-
-/* CKA_PRIME_BITS and CKA_SUB_PRIME_BITS are new for v2.11 */
-#define CKA_PRIME_BITS         0x00000133
-#define CKA_SUB_PRIME_BITS     0x00000134
-
 #define CKA_VALUE_BITS         0x00000160
 #define CKA_VALUE_LEN          0x00000161
 
@@ -451,27 +346,9 @@ typedef CK_ULONG          CK_ATTRIBUTE_TYPE;
 #define CKA_LOCAL              0x00000163
 #define CKA_NEVER_EXTRACTABLE  0x00000164
 #define CKA_ALWAYS_SENSITIVE   0x00000165
-
-/* CKA_KEY_GEN_MECHANISM is new for v2.11 */
-#define CKA_KEY_GEN_MECHANISM  0x00000166
-
 #define CKA_MODIFIABLE         0x00000170
-
-/* CKA_ECDSA_PARAMS is deprecated in v2.11,
- * CKA_EC_PARAMS is preferred. */
 #define CKA_ECDSA_PARAMS       0x00000180
-#define CKA_EC_PARAMS          0x00000180
-
 #define CKA_EC_POINT           0x00000181
-
-/* CKA_SECONDARY_AUTH, CKA_AUTH_PIN_FLAGS, 
- * CKA_HW_FEATURE_TYPE, CKA_RESET_ON_INIT, and CKA_HAS_RESET
- * are new for v2.10 */
-#define CKA_SECONDARY_AUTH     0x00000200
-#define CKA_AUTH_PIN_FLAGS     0x00000201
-#define CKA_HW_FEATURE_TYPE    0x00000300
-#define CKA_RESET_ON_INIT      0x00000301
-#define CKA_HAS_RESET          0x00000302
 
 #define CKA_VENDOR_DEFINED     0x80000000
 
@@ -515,34 +392,11 @@ typedef CK_ULONG          CK_MECHANISM_TYPE;
 #define CKM_MD5_RSA_PKCS               0x00000005
 #define CKM_SHA1_RSA_PKCS              0x00000006
 
-/* CKM_RIPEMD128_RSA_PKCS, CKM_RIPEMD160_RSA_PKCS, and
- * CKM_RSA_PKCS_OAEP are new for v2.10 */
-#define CKM_RIPEMD128_RSA_PKCS         0x00000007
-#define CKM_RIPEMD160_RSA_PKCS         0x00000008
-#define CKM_RSA_PKCS_OAEP              0x00000009
-
-/* CKM_RSA_X9_31_KEY_PAIR_GEN, CKM_RSA_X9_31, CKM_SHA1_RSA_X9_31,
- * CKM_RSA_PKCS_PSS, and CKM_SHA1_RSA_PKCS_PSS are new for v2.11 */
-#define CKM_RSA_X9_31_KEY_PAIR_GEN     0x0000000A
-#define CKM_RSA_X9_31                  0x0000000B
-#define CKM_SHA1_RSA_X9_31             0x0000000C
-#define CKM_RSA_PKCS_PSS               0x0000000D
-#define CKM_SHA1_RSA_PKCS_PSS          0x0000000E
-
 #define CKM_DSA_KEY_PAIR_GEN           0x00000010
 #define CKM_DSA                        0x00000011
 #define CKM_DSA_SHA1                   0x00000012
 #define CKM_DH_PKCS_KEY_PAIR_GEN       0x00000020
 #define CKM_DH_PKCS_DERIVE             0x00000021
-
-/* CKM_X9_42_DH_KEY_PAIR_GEN, CKM_X9_42_DH_DERIVE,
- * CKM_X9_42_DH_HYBRID_DERIVE, and CKM_X9_42_MQV_DERIVE are new for
- * v2.11 */
-#define CKM_X9_42_DH_KEY_PAIR_GEN      0x00000030
-#define CKM_X9_42_DH_DERIVE            0x00000031
-#define CKM_X9_42_DH_HYBRID_DERIVE     0x00000032
-#define CKM_X9_42_MQV_DERIVE           0x00000033
-
 #define CKM_RC2_KEY_GEN                0x00000100
 #define CKM_RC2_ECB                    0x00000101
 #define CKM_RC2_CBC                    0x00000102
@@ -599,16 +453,6 @@ typedef CK_ULONG          CK_MECHANISM_TYPE;
 #define CKM_SHA_1_HMAC                 0x00000221
 #define CKM_SHA_1_HMAC_GENERAL         0x00000222
 
-/* CKM_RIPEMD128, CKM_RIPEMD128_HMAC, 
- * CKM_RIPEMD128_HMAC_GENERAL, CKM_RIPEMD160, CKM_RIPEMD160_HMAC,
- * and CKM_RIPEMD160_HMAC_GENERAL are new for v2.10 */
-#define CKM_RIPEMD128                  0x00000230
-#define CKM_RIPEMD128_HMAC             0x00000231
-#define CKM_RIPEMD128_HMAC_GENERAL     0x00000232
-#define CKM_RIPEMD160                  0x00000240
-#define CKM_RIPEMD160_HMAC             0x00000241
-#define CKM_RIPEMD160_HMAC_GENERAL     0x00000242
-
 /* All of the following mechanisms are new for v2.0 */
 /* Note that CAST128 and CAST5 are the same algorithm */
 #define CKM_CAST_KEY_GEN               0x00000300
@@ -656,16 +500,6 @@ typedef CK_ULONG          CK_MECHANISM_TYPE;
 #define CKM_SSL3_PRE_MASTER_KEY_GEN    0x00000370
 #define CKM_SSL3_MASTER_KEY_DERIVE     0x00000371
 #define CKM_SSL3_KEY_AND_MAC_DERIVE    0x00000372
-
-/* CKM_SSL3_MASTER_KEY_DERIVE_DH, CKM_TLS_PRE_MASTER_KEY_GEN,
- * CKM_TLS_MASTER_KEY_DERIVE, CKM_TLS_KEY_AND_MAC_DERIVE, and
- * CKM_TLS_MASTER_KEY_DERIVE_DH are new for v2.11 */
-#define CKM_SSL3_MASTER_KEY_DERIVE_DH  0x00000373
-#define CKM_TLS_PRE_MASTER_KEY_GEN     0x00000374
-#define CKM_TLS_MASTER_KEY_DERIVE      0x00000375
-#define CKM_TLS_KEY_AND_MAC_DERIVE     0x00000376
-#define CKM_TLS_MASTER_KEY_DERIVE_DH   0x00000377
-
 #define CKM_SSL3_MD5_MAC               0x00000380
 #define CKM_SSL3_SHA1_MAC              0x00000381
 #define CKM_MD5_KEY_DERIVATION         0x00000390
@@ -685,10 +519,6 @@ typedef CK_ULONG          CK_MECHANISM_TYPE;
 #define CKM_PBE_SHA1_DES2_EDE_CBC      0x000003A9
 #define CKM_PBE_SHA1_RC2_128_CBC       0x000003AA
 #define CKM_PBE_SHA1_RC2_40_CBC        0x000003AB
-
-/* CKM_PKCS5_PBKD2 is new for v2.10 */
-#define CKM_PKCS5_PBKD2                0x000003B0
-
 #define CKM_PBA_SHA1_WITH_SHA1_HMAC    0x000003C0
 #define CKM_KEY_WRAP_LYNKS             0x00000400
 #define CKM_KEY_WRAP_SET_OAEP          0x00000401
@@ -715,21 +545,9 @@ typedef CK_ULONG          CK_MECHANISM_TYPE;
 #define CKM_BATON_COUNTER              0x00001034
 #define CKM_BATON_SHUFFLE              0x00001035
 #define CKM_BATON_WRAP                 0x00001036
-
-/* CKM_ECDSA_KEY_PAIR_GEN is deprecated in v2.11,
- * CKM_EC_KEY_PAIR_GEN is preferred */
 #define CKM_ECDSA_KEY_PAIR_GEN         0x00001040
-#define CKM_EC_KEY_PAIR_GEN            0x00001040
-
 #define CKM_ECDSA                      0x00001041
 #define CKM_ECDSA_SHA1                 0x00001042
-
-/* CKM_ECDH1_DERIVE, CKM_ECDH1_COFACTOR_DERIVE, and CKM_ECMQV_DERIVE
- * are new for v2.11 */
-#define CKM_ECDH1_DERIVE               0x00001050
-#define CKM_ECDH1_COFACTOR_DERIVE      0x00001051
-#define CKM_ECMQV_DERIVE               0x00001052
-
 #define CKM_JUNIPER_KEY_GEN            0x00001060
 #define CKM_JUNIPER_ECB128             0x00001061
 #define CKM_JUNIPER_CBC128             0x00001062
@@ -737,20 +555,6 @@ typedef CK_ULONG          CK_MECHANISM_TYPE;
 #define CKM_JUNIPER_SHUFFLE            0x00001064
 #define CKM_JUNIPER_WRAP               0x00001065
 #define CKM_FASTHASH                   0x00001070
-
-/* CKM_AES_KEY_GEN, CKM_AES_ECB, CKM_AES_CBC, CKM_AES_MAC,
- * CKM_AES_MAC_GENERAL, CKM_AES_CBC_PAD, CKM_DSA_PARAMETER_GEN,
- * CKM_DH_PKCS_PARAMETER_GEN, and CKM_X9_42_DH_PARAMETER_GEN are
- * new for v2.11 */
-#define CKM_AES_KEY_GEN                0x00001080
-#define CKM_AES_ECB                    0x00001081
-#define CKM_AES_CBC                    0x00001082
-#define CKM_AES_MAC                    0x00001083
-#define CKM_AES_MAC_GENERAL            0x00001084
-#define CKM_AES_CBC_PAD                0x00001085
-#define CKM_DSA_PARAMETER_GEN          0x00002000
-#define CKM_DH_PKCS_PARAMETER_GEN      0x00002001
-#define CKM_X9_42_DH_PARAMETER_GEN     0x00002002
 
 #define CKM_VENDOR_DEFINED             0x80000000
 
@@ -774,9 +578,9 @@ typedef CK_MECHANISM CK_PTR CK_MECHANISM_PTR;
 /* CK_MECHANISM_INFO provides information about a particular
  * mechanism */
 typedef struct CK_MECHANISM_INFO {
-	CK_ULONG    ulMinKeySize;
-	CK_ULONG    ulMaxKeySize;
-	CK_FLAGS    flags;
+    CK_ULONG    ulMinKeySize;
+    CK_ULONG    ulMaxKeySize;
+    CK_FLAGS    flags;
 } CK_MECHANISM_INFO;
 
 /* The flags are defined as follows:
@@ -800,17 +604,6 @@ typedef struct CK_MECHANISM_INFO {
 #define CKF_WRAP               0x00020000
 #define CKF_UNWRAP             0x00040000
 #define CKF_DERIVE             0x00080000
-
-/* CKF_EC_F_P, CKF_EC_F_2M, CKF_EC_ECPARAMETERS, CKF_EC_NAMEDCURVE,
- * CKF_EC_UNCOMPRESS, and CKF_EC_COMPRESS are new for v2.11. They
- * describe a token's EC capabilities not available in mechanism
- * information. */
-#define CKF_EC_F_P	           0x00100000
-#define CKF_EC_F_2M	           0x00200000
-#define CKF_EC_ECPARAMETERS	   0x00400000
-#define CKF_EC_NAMEDCURVE	   0x00800000
-#define CKF_EC_UNCOMPRESS	   0x01000000
-#define CKF_EC_COMPRESS	       0x02000000
 
 #define CKF_EXTENSION          0x80000000  /* FALSE for 2.01 */
 
@@ -933,11 +726,6 @@ typedef CK_ULONG          CK_RV;
 
 /* These are new to v2.0 */
 #define CKR_RANDOM_NO_RNG                     0x00000121
-
-/* These are new to v2.11 */
-#define CKR_DOMAIN_PARAMS_INVALID             0x00000130
-
-/* These are new to v2.0 */
 #define CKR_BUFFER_TOO_SMALL                  0x00000150
 #define CKR_SAVED_STATE_INVALID               0x00000160
 #define CKR_INFORMATION_SENSITIVE             0x00000170
@@ -955,7 +743,7 @@ typedef CK_ULONG          CK_RV;
 /* CK_NOTIFY is an application callback that processes events */
 typedef CK_CALLBACK_FUNCTION(CK_RV, CK_NOTIFY)(
   CK_SESSION_HANDLE hSession,     /* the session's handle */
-						   CK_NOTIFICATION   event,
+  CK_NOTIFICATION   event,
   CK_VOID_PTR       pApplication  /* passed to C_OpenSession */
 );
 
@@ -1023,50 +811,6 @@ typedef CK_C_INITIALIZE_ARGS CK_PTR CK_C_INITIALIZE_ARGS_PTR;
 /* CKF_DONT_BLOCK is for the function C_WaitForSlotEvent */
 #define CKF_DONT_BLOCK     1
 
-/* CK_RSA_PKCS_OAEP_MGF_TYPE is new for v2.10. 
- * CK_RSA_PKCS_OAEP_MGF_TYPE  is used to indicate the Message 
- * Generation Function (MGF) applied to a message block when 
- * formatting a message block for the PKCS #1 OAEP encryption 
- * scheme. */
-typedef CK_ULONG CK_RSA_PKCS_MGF_TYPE;
-
-typedef CK_RSA_PKCS_MGF_TYPE CK_PTR CK_RSA_PKCS_MGF_TYPE_PTR;
-
-/* The following MGFs are defined */
-#define CKG_MGF1_SHA1         0x00000001
-
-/* CK_RSA_PKCS_OAEP_SOURCE_TYPE is new for v2.10. 
- * CK_RSA_PKCS_OAEP_SOURCE_TYPE  is used to indicate the source
- * of the encoding parameter when formatting a message block 
- * for the PKCS #1 OAEP encryption scheme. */
-typedef CK_ULONG CK_RSA_PKCS_OAEP_SOURCE_TYPE;
-
-typedef CK_RSA_PKCS_OAEP_SOURCE_TYPE CK_PTR CK_RSA_PKCS_OAEP_SOURCE_TYPE_PTR;
-
-/* The following encoding parameter sources are defined */
-#define CKZ_DATA_SPECIFIED    0x00000001
-
-/* CK_RSA_PKCS_OAEP_PARAMS is new for v2.10.
- * CK_RSA_PKCS_OAEP_PARAMS provides the parameters to the 
- * CKM_RSA_PKCS_OAEP mechanism. */
-typedef struct CK_RSA_PKCS_OAEP_PARAMS {
-	CK_MECHANISM_TYPE hashAlg;
-	CK_RSA_PKCS_MGF_TYPE mgf;
-	CK_RSA_PKCS_OAEP_SOURCE_TYPE source;
-	CK_VOID_PTR pSourceData;
-	CK_ULONG ulSourceDataLen;
-} CK_RSA_PKCS_OAEP_PARAMS;
-
-typedef CK_RSA_PKCS_OAEP_PARAMS CK_PTR CK_RSA_PKCS_OAEP_PARAMS_PTR;
-
-/* CK_RSA_PKCS_PSS_PARAMS is new for v2.11.
- * CK_RSA_PKCS_PSS_PARAMS provides the parameters to the
- * CKM_RSA_PKCS_PSS mechanism(s). */
-typedef struct CK_RSA_PKCS_PSS_PARAMS {
-	CK_MECHANISM_TYPE    hashAlg;
-	CK_RSA_PKCS_MGF_TYPE mgf;
-	CK_ULONG             sLen;
-} CK_RSA_PKCS_PSS_PARAMS;
 
 /* CK_KEA_DERIVE_PARAMS provides the parameters to the
  * CKM_KEA_DERIVE mechanism */
@@ -1208,12 +952,12 @@ typedef CK_SKIPJACK_RELAYX_PARAMS CK_PTR \
 
 
 typedef struct CK_PBE_PARAMS {
-  CK_BYTE_PTR      pInitVector;
-  CK_UTF8CHAR_PTR  pPassword;
-  CK_ULONG         ulPasswordLen;
-  CK_BYTE_PTR      pSalt;
-  CK_ULONG         ulSaltLen;
-  CK_ULONG         ulIteration;
+  CK_CHAR_PTR  pInitVector;
+  CK_CHAR_PTR  pPassword;
+  CK_ULONG     ulPasswordLen;
+  CK_CHAR_PTR  pSalt;
+  CK_ULONG     ulSaltLen;
+  CK_ULONG     ulIteration;
 } CK_PBE_PARAMS;
 
 typedef CK_PBE_PARAMS CK_PTR CK_PBE_PARAMS_PTR;
@@ -1291,44 +1035,5 @@ typedef CK_ULONG CK_EXTRACT_PARAMS;
 
 typedef CK_EXTRACT_PARAMS CK_PTR CK_EXTRACT_PARAMS_PTR;
 
-/* CK_PKCS5_PBKD2_PSEUDO_RANDOM_FUNCTION_TYPE is new for v2.10.
- * CK_PKCS5_PBKD2_PSEUDO_RANDOM_FUNCTION_TYPE is used to 
- * indicate the Pseudo-Random Function (PRF) used to generate 
- * key bits using PKCS #5 PBKDF2. */
-typedef CK_ULONG CK_PKCS5_PBKD2_PSEUDO_RANDOM_FUNCTION_TYPE;
-
-typedef CK_PKCS5_PBKD2_PSEUDO_RANDOM_FUNCTION_TYPE CK_PTR CK_PKCS5_PBKD2_PSEUDO_RANDOM_FUNCTION_TYPE_PTR;
-
-/* The following PRFs are defined in PKCS #5 v2.0. */
-#define CKP_PKCS5_PBKD2_HMAC_SHA1 0x00000001
-
-
-/* CK_PKCS5_PBKDF2_SALT_SOURCE_TYPE is new for v2.10.
- * CK_PKCS5_PBKDF2_SALT_SOURCE_TYPE is used to indicate the 
- * source of the salt value when deriving a key using PKCS #5 
- * PBKDF2. */
-typedef CK_ULONG CK_PKCS5_PBKDF2_SALT_SOURCE_TYPE;
-
-typedef CK_PKCS5_PBKDF2_SALT_SOURCE_TYPE CK_PTR CK_PKCS5_PBKDF2_SALT_SOURCE_TYPE_PTR;
-
-/* The following salt value sources are defined in PKCS #5 v2.0. */
-#define CKZ_SALT_SPECIFIED        0x00000001
-
-/* CK_PKCS5_PBKD2_PARAMS is new for v2.10.
- * CK_PKCS5_PBKD2_PARAMS is a structure that provides the 
- * parameters to the CKM_PKCS5_PBKD2 mechanism. */
-typedef struct CK_PKCS5_PBKD2_PARAMS {
-	CK_PKCS5_PBKDF2_SALT_SOURCE_TYPE           saltSource;
-	CK_VOID_PTR                                pSaltSourceData;
-	CK_ULONG                                   ulSaltSourceDataLen;
-	CK_ULONG                                   iterations;
-	CK_PKCS5_PBKD2_PSEUDO_RANDOM_FUNCTION_TYPE prf;
-	CK_VOID_PTR                                pPrfData;
-	CK_ULONG                                   ulPrfDataLen;
-	CK_UTF8CHAR_PTR                            pPassword;
-	CK_ULONG_PTR                               ulPasswordLen;
-} CK_PKCS5_PBKD2_PARAMS;
-
-typedef CK_PKCS5_PBKD2_PARAMS CK_PTR CK_PKCS5_PBKD2_PARAMS_PTR;
 
 #endif

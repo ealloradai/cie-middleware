@@ -1,4 +1,6 @@
-#include "..\StdAfx.h"
+#if defined (_MSC_VER)
+#include "../StdAfx.h"
+#endif
 #include "CIEP11Template.h"
 #include "../CSP/IAS.h"
 #include "../PCSC/CardLocker.h"

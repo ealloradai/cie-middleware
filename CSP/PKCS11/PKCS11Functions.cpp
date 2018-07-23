@@ -1,13 +1,23 @@
 // P11Emissione.cpp : Defines the entry point for the DLL application.
 //
 
-#include "..\StdAfx.h"
+#if defined (_MSC_VER)
+#include "../StdAfx.h"
+#include <malloc.h>
+#endif
 #include "PKCS11Functions.h"
 #include "InitP11.h"
+#if defined __linux__ || defined __APPLE__
+#include <PCSC/winscard.h>
+#include <PCSC/wintypes.h>
+#endif
+
+#if defined _WIN32 || defined _WIN64
 #include <winscard.h>
+#endif
+
 #include "session.h"
 #include "cardtemplate.h"
-#include <malloc.h>
 #include "../Util/ModuleInfo.h"
 #include "../Util/util.h"
 #include "../Util/syncroevent.h"

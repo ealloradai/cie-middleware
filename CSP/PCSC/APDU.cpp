@@ -1,4 +1,6 @@
+#if defined (_MSC_VER)
 #include "../StdAfx.h"
+#endif
 #include "apdu.h"
 #include "../Util/tlv.h"
 #include "../Util/util.h"

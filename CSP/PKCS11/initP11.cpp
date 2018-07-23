@@ -1,5 +1,8 @@
-#include "..\StdAfx.h"
-#include ".\InitP11.h"
+#if defined (_MSC_VER)
+#include "../stdafx.h"
+#endif
+
+#include "InitP11.h"
 
 namespace p11 {
 

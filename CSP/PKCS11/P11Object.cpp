@@ -1,4 +1,6 @@
-#include "..\StdAfx.h"
+#if defined (_MSC_VER)
+#include "../StdAfx.h"
+#endif
 #include "p11object.h"
 #include "cardtemplate.h"
 
